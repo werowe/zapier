@@ -1,28 +1,56 @@
+JSON.flatten = function(data) {
+    var result = {};
+    function recurse (cur, prop) {
+        if (Object(cur) !== cur) {
+            result[prop] = cur;
+        } else if (Array.isArray(cur)) {
+             for(var i=0, l=cur.length; i<l; i++)
+                 recurse(cur[i], prop ? prop+"."+i : ""+i);
+            if (l == 0)
+                result[prop] = [];
+        } else {
+            var isEmpty = true;
+            for (var p in cur) {
+                isEmpty = false;
+                recurse(cur[p], prop ? prop+"."+p : p);
+            }
+            if (isEmpty)
+                result[prop] = {};
+        }
+    }
+    recurse(data, "");
+    y = '{"id": 1' + result[''] + '}'
+    return y;
+}
+
+
+
 const listSurveys = (z, bundle) => {
-  // `z.console.log()` is similar to `console.log()`.
-  z.console.log('console says hello world!');
-
-  const params = {};
-  if (bundle.inputData.style) {
-    params.style = bundle.inputData.style;
-  }
-
-  // You can build requests and our client will helpfully inject all the variables
-  // you need to complete. You can also register middleware to control this.
-  const requestOptions = {
-    url: 'https://co1.qualtrics.com/API/v3/surveys',
-    params: params
+const customHttpOptions = {
+    headers: {
+      'X-API-TOKEN': 'RnwyKn8wLlF3dNoR8rjesuBIJQRRW7pgM7U6ubZy'
+    }
   };
 
-  // You may return a promise or a normal data structure from any perform method.
-  return z.request(requestOptions)
-    .then((response) => z.JSON.parse(response.content));
+  return z
+    .request('https://co1.qualtrics.com/API/v3/surveys', customHttpOptions)
+    .then(response => {
+      if (response.status >= 300) {
+        throw new Error(`Unexpected status code ${response.status}`);
+      }
+
+      //const s = z.JSON.parse(response.content);
+      s = JSON.parse(response.content);
+      t =  JSON.flatten(s);
+      console.log(t);
+      return s; 
+    });
 };
 
-// We recommend writing your triggers separate like this and rolling them
-// into the App definition at the end.
+
+
 module.exports = {
-  key: 'listsurveys',
+  key: 'qualtrics',
 
   // You'll want to provide some helpful display labels and descriptions
   // for users. Zapier will put them into the UX.
@@ -38,7 +66,7 @@ module.exports = {
     // `inputFields` can define the fields a user could provide,
     // we'll pass them in as `bundle.inputData` later.
     inputFields: [
-      {key: 'apikey`', type: 'string',  helpText: 'what is your API Key'}
+      {key: 'apikey', type: 'string',  helpText: 'what is your API Key'}
     ],
 
     perform: listSurveys,
@@ -47,6 +75,7 @@ module.exports = {
     // from the API, Zapier will fallback to this hard-coded sample. It should reflect the data structure of
     // returned records, and have obviously dummy values that we can show to any user.
     sample: {
+        "id": 1, 
         "result": {
                 "elements": [{
                         "id": "SV_77YYKB7fRGDti1n",
