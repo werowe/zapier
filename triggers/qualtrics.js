@@ -23,7 +23,33 @@ JSON.flatten = function(data) {
     return y;
 }
 
+function json2array(json){
+    var result = [];
+    var keys = Object.keys(json);
+    keys.forEach(function(key){
+        result.push(json[key]);
+    });
+    return result;
+}
 
+const listSurveys = (z, bundle) => {
+const customHttpOptions = {
+    headers: {
+      'X-API-TOKEN': 'RnwyKn8wLlF3dNoR8rjesuBIJQRRW7pgM7U6ubZy'
+    }
+  };
+
+  return z
+    .request('https://co1.qualtrics.com/API/v3/surveys', customHttpOptions)
+    .then(response => {
+      if (response.status >= 300) {
+        throw new Error(`Unexpected status code ${response.status}`);
+      }
+
+      s = json2array(JSON.parse(response.content));
+      return s;
+    });
+};
 
 const listSurveys = (z, bundle) => {
 const customHttpOptions = {
