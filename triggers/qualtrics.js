@@ -21,11 +21,14 @@ const customHttpOptions = {
         throw new Error(`Unexpected status code ${response.status}`);
       }
 
-      s = json2array(JSON.parse(response.content));
-      d = JSON.stringify(s[0])
-      x='{"id": "1d": 1,' + d.substring(1)
-      s =json2array(JSON.parse(x))
-      return s;
+      
+          
+      s=JSON.parse(response.content));
+      
+      
+      s.result.elements["id"]="1"
+      
+      return s.result.elements;
     });
 };
 
@@ -46,7 +49,7 @@ const customHttpOptions = {
       //const s = z.JSON.parse(response.content);
       s = JSON.parse(response.content);
       t =  JSON.flatten(s);
-      console.log(t);
+      z.console.log(t);
       return s; 
     });
 };
