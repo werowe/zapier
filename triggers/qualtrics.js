@@ -1,7 +1,7 @@
 const listSurveys = (z, bundle) => {
 const customHttpOptions = {
     headers: {
-      'X-API-TOKEN': 'RnwyKn8wLlF3dNoR8rjesuBIJQRRW7pgM7U6ubZy'
+      'X-API-TOKEN': bundle.inputData.apikey
     }
   };
 
