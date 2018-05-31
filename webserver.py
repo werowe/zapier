@@ -1,29 +1,17 @@
-from http.server import BaseHTTPRequestHandler,HTTPServer
+import sys
+import socket
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.bind(("", 8080))
+server_socket.listen(5)
 
-PORT_NUMBER = 8080
+print("TCP Server Waiting for client on port 8080")
 
-#This class will handles any incoming request from
-#the browser 
-class myHandler(BaseHTTPRequestHandler):
-
-        #Handler for the GET requests
-        def do_GET(self):
-                self.send_response(200)
-                self.send_header('Content-type','text/html')
-                self.end_headers()
-                # Send the html message
-                self.wfile.write("Hello World !")
-                return
-
-try:
-        #Create a web server and define the handler to manage the
-        #incoming request
-        server = HTTPServer(('', PORT_NUMBER), myHandler)
-        print ('Started httpserver on port ' , PORT_NUMBER)
-
-        #Wait forever for incoming htto requests
-        server.serve_forever()
-
-except KeyboardInterrupt:
-        print ('^C received, shutting down the web server')
-        server.socket.close()
+while True:
+    try:
+        client_socket, address = server_socket.accept()
+        print("TCP Server received connect from: " + str(address))
+        data = client_socket.recv(512)
+        print("Received: " + str(data,'UTF-8'))
+    except KeyboardInterrupt:
+        client_socket.close()
+        sys.exit(1)
