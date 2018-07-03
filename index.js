@@ -21,8 +21,8 @@ const App = {
 
   // If you want your trigger to show up, you better include it here!
   triggers: {
-     [surveys.key]: surveys,
-     [dropdown.key]: dropdown
+     [dropdown.key]: dropdown,
+     [surveys.key]: surveys
   },
 
   // If you want your searches to show up, you better include it here!
