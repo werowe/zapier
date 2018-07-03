@@ -35,7 +35,10 @@ module.exports = {
     hidden: true
   },
       operation: {
-        
+    inputFields: [
+          {key: 'apikey', type: 'string',  helpText: 'what is your Qualtrics API Key?'}
+        ],
+     
         perform: surveysdropdown,
 
 },
