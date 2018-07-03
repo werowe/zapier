@@ -33,15 +33,31 @@ module.exports = {
   key: 'surveys',
   noun: 'surveys',
   display: {
-    label: 'List Surveys',
-    description: 'List Surveys for this account'
+    label: 'List Survey Responses',
+    description: 'List Survey Responses'
   },
 
- operation: {
- inputFields: [
-    { key: "surveyid", type: "string", helpText: "surveyID", dynamic: "dropdown.id.name" },
- ],
-    
-  perform: listsurveys, 
-} ,
+operation: {
+        inputFields: [
+          {key: 'apikey', type: 'string',  helpText: 'what is your Qualtrics API Key?'},
+          { key: "surveyid", type: "string", helpText: "surveyID", dynamic: "dropdown.id.name" }
+        ],
+        perform: listsurveys,
+
+sample: {
+                id: "R_3eoz5DPjkSJBbAl",
+                ResponseSet: "Default Response Set",
+                Name: "Anonymous",
+                ExternalDataReference: "",
+                EmailAddress: "",
+                IPAddress: "213.170.48.166",
+                Status: "0",
+                StartDate: "2018-06-25 20:32:31",
+                EndDate: "2018-06-25 20:32:36",
+                Finished: "1",
+                Q1: 2,
+                Q2: 2,
+                Q3: 6
+                },
+},
 };
