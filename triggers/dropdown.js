@@ -31,12 +31,13 @@ module.exports = {
   noun: 'dropdown',
   display: {
     label: 'List Surveys',
-    description: 'List Surveys for this account'
+    description: 'List Surveys for this account',
+    hidden: true
   },
       operation: {
-        inputFields: [ 
-          {key: 'apikey', type: 'string',  helpText: 'what is your Qualtrics API Key?'},
-        ],
+        
         perform: surveysdropdown,
+
 },
+
 };
