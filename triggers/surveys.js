@@ -39,7 +39,6 @@ module.exports = {
 
 operation: {
         inputFields: [
-          {key: 'apikey', type: 'string',  helpText: 'what is your Qualtrics API Key?'},
           { key: "surveyid", type: "string", helpText: "surveyID", dynamic: "dropdown.id.name" }
         ],
         perform: listsurveys,
