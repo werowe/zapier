@@ -1,13 +1,38 @@
 const surveys = require('./triggers/surveys');
 const dropdown = require('./triggers/dropdown');
 
+const testapikey = (z, bundle) => {
+const customHttpOptions = {
+    headers: {
+      'content-type': 'application/json',
+      'X-API-TOKEN': bundle.authData.apikey
+    }
+  };
+return z
+    .request('https://co1.qualtrics.com/API/v3/surveys', customHttpOptions)
+    .then(response => {
+      if (response.status >= 300) {
+        throw new Error(`Unexpected status code ${response.status}`);
+      } 
+     a = []
+     str = z.JSON.parse(response.content);
+     
+     str.result.elements.forEach(s => {
+         id = s.id;
+         name = s.name;
+         json = '{ "id": "' + id + '", "name": "' + name + '" }'
+         console.log(json);
+         a.push(z.JSON.parse(json))   
+    });
+    return a;
+    });
+};
+
 
 const authentication = {
   type: 'custom',
   connectionLabel: '{{bundle.authData.apikey}}',
-  test: {
-    url: 'https://example.com/api/accounts/me.json'
-  },
+  test: testapikey,
   fields: [
     {
       key: 'apikey',
