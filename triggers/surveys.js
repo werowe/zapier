@@ -1,12 +1,7 @@
-const listsurveys = (z, bundle) => {
-const customHttpOptions = {
-    headers: {
-      'X-API-TOKEN': bundle.inputData.apikey
-    }
-  };
+onst listsurveys = (z, bundle) => {
 
   return z
-    .request('https://survey.qualtrics.com/WRAPI/ControlPanel/api.php?Request=getLegacyResponseData&User=' + bundle.inputData.userid + '&Token=' + bundle.inputData.apikey + '&Format=JSON&Version=2.0&SurveyID=' + bundle.inputData.surveyid , customHttpOptions)
+    .request('https://survey.qualtrics.com/WRAPI/ControlPanel/api.php?Request=getLegacyResponseData&User=' + bundle.inputData.userid + '&Token=' + bundle.inputData.apikey + '&Format=JSON&Version=2.0&SurveyID=' + bundle.inputData.surveyid)
     .then(response => {
       if (response.status >= 300) {
         throw new Error(`Unexpected status code ${response.status}`);
@@ -39,7 +34,8 @@ module.exports = {
 
 operation: {
         inputFields: [
-          { key: "surveyid", type: "string", helpText: "surveyID", dynamic: "dropdown.id.name" }
+          { key: "surveyid", type: "string", helpText: "This is the surveyID from your list of surveys", dynamic: "dropdown.id.name" },
+          { key: "userid", type: "string", helpText: "This is your Zapier userid"}
         ],
         perform: listsurveys,
 
