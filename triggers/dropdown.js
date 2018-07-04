@@ -2,11 +2,11 @@ const surveysdropdown = (z, bundle) => {
 const customHttpOptions = {
     headers: {
       'content-type': 'application/json',
-      'X-API-TOKEN': bundle.inputData.apikey
+      'X-API-TOKEN': bundle.authData.apikey
     }
   };
 return z
-    .request('https://qualtrics.com/API/v3/surveys', customHttpOptions)
+    .request('https://co1.qualtrics.com/API/v3/surveys', customHttpOptions)
     .then(response => {
       if (response.status >= 300) {
         throw new Error(`Unexpected status code ${response.status}`);
@@ -17,9 +17,9 @@ return z
      str.result.elements.forEach(s => {
          id = s.id;
          name = s.name;
-         json = "{ id: " + id + ", name:" + name + " }"
-         z.console.log(json);
-         a.push(json) 
+         json = '{ "id": "' + id + '", "name": "' + name + '" }'
+         console.log(json);
+         a.push(z.JSON.parse(json))   
     });
     return a;
     });
@@ -35,9 +35,6 @@ module.exports = {
     hidden: true
   },
       operation: {
-    inputFields: [
-          {key: 'apikey', type: 'string',  helpText: 'what is your Qualtrics API Key?'}
-        ],
      
         perform: surveysdropdown,
 
